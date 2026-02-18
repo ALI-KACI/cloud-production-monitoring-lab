@@ -22,7 +22,7 @@ It is Safer to create a non-root user and grant sudo access, so that accidental 
 - '/dev'    → Device files
 - '/tmp'    → Temporary files
 
-  ## Day 2 — Networking & Service Management
+## Day 2 — Networking & Service Management
   🌐 Network Inspection
 - Private IP: 172.31.24.47
 - Environment: EC2 (Private subnet range 172.31.x.x)
