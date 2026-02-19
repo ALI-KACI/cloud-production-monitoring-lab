@@ -74,3 +74,85 @@ Even if Nginx runs successfully:
 External access may fail due to Security Group rules.
 
 Network-layer security is separate from OS-layer service status.
+🟣 Day 3 — Process & System Monitoring
+🎯 Objective
+
+Understand Linux process management, CPU usage, load average, memory analysis, and disk inode monitoring from a production perspective.
+
+🖥 System Monitoring Commands Used
+ps aux
+top
+uptime
+nproc
+free -m
+df -h
+df -i
+
+🔍 Load Average Analysis
+
+Command:
+
+uptime
+
+
+Output:
+
+load average: 0.00, 0.00, 0.00
+
+
+Instance CPU cores:
+
+2 vCPUs
+
+Interpretation
+
+Load < number of CPU cores → system healthy
+
+Load = CPU cores → fully utilized
+
+Load > CPU cores → overloaded system
+⚡ CPU Stress Simulation
+
+Command used to simulate CPU load:
+
+yes > /dev/null &
+
+Observations
+
+The yes process consumed high CPU.
+
+CPU usage increased significantly in top.
+
+Demonstrated how runaway processes impact system performance.
+
+Stopped the process using:
+
+killall yes
+
+💾 Disk & Inode Monitoring
+
+Checked disk usage:
+
+df -h
+
+
+Checked inode usage:
+
+df -i
+
+Important Concept
+
+Even if disk space is available,
+if inodes are exhausted (100%),
+the system cannot create new files.
+
+This is critical for:
+
+Log-heavy systems
+
+Web servers
+
+Monitoring systems
+
+
+
