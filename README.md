@@ -74,7 +74,7 @@ Even if Nginx runs successfully:
 External access may fail due to Security Group rules.
 
 Network-layer security is separate from OS-layer service status.
-🟣 Day 3 — Process & System Monitoring
+## Day 3 — Process & System Monitoring
 🎯 Objective
 
 Understand Linux process management, CPU usage, load average, memory analysis, and disk inode monitoring from a production perspective.
