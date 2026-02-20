@@ -276,5 +276,109 @@ Monitoring log growth is important.
 
 High traffic can impact system resources.
 
+## 🟢 Day 5 — Automation, Cron Jobs & Log Rotation
+🎯 Objective
+
+Introduce automation and preventive system management using:
+
+Cron jobs
+
+Scheduled health checks
+
+Log rotation
+
+System timers
+
+⏰ Cron Jobs — Task Scheduling
+Checked existing cron jobs
+crontab -l
+
+Checked system cron directories:
+
+ls /etc/cron*
+
+🛠 Created Custom Cron Job
+
+Automated system health check script:
+
+crontab -e
+
+Added:
+
+*/5 * * * * /home/cloudadmin/health_check.sh >> /home/cloudadmin/health.log 2>&1
+Explanation
+
+Runs every 5 minutes
+
+Appends output to health.log
+
+Redirects errors (2>&1) into same file
+
+Key Learning
+
+Automation reduces manual monitoring
+
+Logging script output enables historical analysis
+
+Scheduled jobs are critical in production systems
+
+Pictures Cron Jobs — Task Scheduling.png
+
+🔄 Log Rotation — Prevent Disk Overflow
+
+Checked nginx logrotate configuration:
+
+cat /etc/logrotate.d/nginx
+
+Observed configuration includes:
+
+Daily rotation
+
+Limited number of retained logs
+
+Compression of old logs
+
+Forced rotation manually:
+
+sudo logrotate -f /etc/logrotate.d/nginx
+
+Verified rotated logs:
+
+ls -lh /var/log/nginx
+
+Observed:
+
+access.log
+
+access.log.1
+
+access.log.2.gz
+
+Key Learning
+
+Logs can grow indefinitely
+
+Log rotation prevents disk exhaustion
+
+Production systems must control log size
+
+Pictures Cron Jobs — Task Scheduling.png
+
+⏱ System Timers
+
+Checked systemd timers:
+
+systemctl list-timers
+
+Observed:
+
+Automatic background maintenance tasks
+
+Modern alternative to traditional cron jobs
+
+Pictures 3.⏱ System Timers.png
+
+
+
 
 
