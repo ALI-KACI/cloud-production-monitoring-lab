@@ -154,5 +154,127 @@ Web servers
 
 Monitoring systems
 
+## 🔴 Day 4 — Log Analysis & Production Troubleshooting
+🎯 Objective
+
+Simulate real-world production failures and practice structured troubleshooting using:
+
+Service status inspection
+
+Port verification
+
+Configuration validation
+
+Log analysis
+
+Disk usage simulation
+
+🧪 Scenario 1 — Service Failure Investigation
+Step 1 — Check Service Status
+sudo systemctl status nginx
+
+Verified:
+
+Whether the service was active or failed
+
+Observed error messages if present
+
+Step 2 — Check Listening Ports
+ss -tulnp | grep 80
+
+Confirmed whether Nginx was listening on port 80.
+
+Step 3 — Local Connectivity Test
+curl localhost
+
+Observed:
+
+HTML response when service running
+
+Connection refused when service stopped
+
+🧨 Scenario 2 — Intentional Configuration Error
+
+To simulate a deployment mistake:
+
+Edited nginx config file:
+
+sudo nano /etc/nginx/nginx.conf
+
+Added invalid directive to break configuration.
+
+Tested configuration before restart:
+
+sudo nginx -t
+
+Result:
+
+Configuration test failed.
+
+Error message displayed with line number.
+
+Attempted restart:
+
+sudo systemctl restart nginx
+
+Service failed as expected.
+
+Checked error logs:
+
+tail -n 20 /var/log/nginx/error.log
+🔎 Key Learning
+
+Always validate configuration before restart.
+
+Error logs provide precise failure details.
+
+Blind restarts in production can cause outages.
+
+💾 Scenario 3 — Disk Usage Simulation
+
+Created large file to simulate disk pressure:
+
+fallocate -l 500M bigfile
+
+Checked disk usage:
+
+df -h
+
+Observed increase in used space.
+
+Removed file:
+
+rm bigfile
+
+Verified disk recovery.
+
+🔎 Key Learning
+
+Disk monitoring is critical in production.
+
+Log-heavy systems can fill storage quickly.
+
+Disk full situations can stop services.
+
+🌐 Scenario 4 — Traffic Simulation
+
+Generated multiple HTTP requests:
+
+for i in {1..50}; do curl localhost > /dev/null; done
+
+Checked access logs:
+
+tail -n 20 /var/log/nginx/access.log
+
+Observed increased log entries.
+
+🔎 Key Learning
+
+Logs grow proportionally with traffic.
+
+Monitoring log growth is important.
+
+High traffic can impact system resources.
+
 
 
