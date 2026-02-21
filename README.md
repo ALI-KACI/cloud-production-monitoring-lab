@@ -379,6 +379,134 @@ Modern alternative to traditional cron jobs
 Pictures 3.⏱ System Timers.png
 
 
+## 🔵 Day 6 — Cloud Monitoring & EC2 Status Checks
+🎯 Objective
+
+Understand the difference between:
+
+OS-level monitoring
+
+Cloud-level monitoring (CloudWatch)
+
+Infrastructure vs Instance responsibility
+
+🧪 Exercise 1 — CPU Stress & Metric Correlation
+Step 1 — Simulate CPU Load
+yes > /dev/null &
+
+Observed:
+
+CPU usage instantly reached ~99% in top
+
+CloudWatch CPUUtilization increased after a short delay
+
+Stopped process:
+
+killall yes
+🔎 Observations
+Layer	Behavior
+OS (top)	Instant CPU spike (~99%)
+CloudWatch	Delayed update
+Values	Not identical (CloudWatch ~18%)
+🧠 Key Learning
+
+OS metrics update instantly
+
+CloudWatch metrics have delay (aggregation interval)
+
+CloudWatch shows hypervisor-level metrics
+
+Monitoring layers are different
+
+pitcture:4.before_overload_CPU.png
+pitcture:5.after_cpu_exceed_treshold.png
+pitcture:6.before_overload_CPU.png
+pitcture:7.after_cpu_exceed_treshold.png
+
+📊 Monitoring Layers
+1️⃣ OS-Level Monitoring (Inside EC2)
+
+Commands used:
+
+top
+free -m
+df -h
+
+Provides:
+
+Real-time CPU
+
+Memory usage
+
+Disk usage
+
+Process visibility
+
+2️⃣ Cloud-Level Monitoring (AWS CloudWatch)
+
+Provides:
+
+CPUUtilization
+
+NetworkIn / NetworkOut
+
+Status checks
+
+Basic instance health
+
+Does NOT provide:
+
+Memory usage (by default)
+
+Detailed disk usage
+
+Process-level visibility
+
+Memory metrics require CloudWatch Agent.
+
+📊 Monitoring Layers
+1️⃣ OS-Level Monitoring (Inside EC2)
+
+Commands used:
+
+top
+free -m
+df -h
+
+Provides:
+
+Real-time CPU
+
+Memory usage
+
+Disk usage
+
+Process visibility
+
+2️⃣ Cloud-Level Monitoring (AWS CloudWatch)
+
+Provides:
+
+CPUUtilization
+
+NetworkIn / NetworkOut
+
+Status checks
+
+Basic instance health
+
+Does NOT provide:
+
+Memory usage (by default)
+
+Detailed disk usage
+
+Process-level visibility
+
+Memory metrics require CloudWatch Agent.
+
+picture: 8.Network_before_HTTP_multiple_request.png
+picture: 9.http request_threshold.png
 
 
 
