@@ -508,5 +508,112 @@ Memory metrics require CloudWatch Agent.
 picture: 8.Network_before_HTTP_multiple_request.png
 picture: 9.http request_threshold.png
 
+## 🟣 Day 7 — High Availability with ALB & Auto Scaling (Hands-on)
+
+🎯 Objective
+
+Build a real High Availability architecture in AWS using:
+
+Application Load Balancer (ALB)
+
+Target Group with health checks
+
+Multiple EC2 instances
+
+Auto Scaling Group
+
+Multi–Availability Zone deployment
+
+Region used: us-east-1
+
+🏗 Architecture Overview
+
+Users → ALB → Target Group → EC2 Instances (Multi-AZ)
+Auto Scaling Group maintains instance count.
+
+🔧 What Was Implemented
+1️⃣ Deployed 2 EC2 Instances
+
+Instance type: t2.micro / t3.micro
+
+Nginx installed via User Data
+
+HTTP (port 80) allowed in Security Group
+
+Deployed across different Availability Zones
+
+Each server displayed its hostname to verify load balancing.
+
+2️⃣ Created Target Group
+
+Target type: Instances
+
+Protocol: HTTP
+
+Port: 80
+
+Health check path: /
+
+Both instances registered successfully and became Healthy.
+
+3️⃣ Created Application Load Balancer
+
+Type: Internet-facing
+
+Listener: HTTP (80)
+
+Attached to Target Group
+
+Enabled in multiple AZs
+
+Testing ALB DNS showed traffic distributed across instances.
+
+Figure: 10.ALB works for server1.png
+Figure: 11.ALB works for server2.png
+
+🧪 Failure Simulation
+🔥 Test 1 — Service Failure
+
+Stopped Nginx on one instance:
+
+sudo systemctl stop nginx
+
+Result:
+
+Target Group marked instance as Unhealthy
+
+ALB stopped routing traffic to failed instance
+
+Application remained accessible
+
+This confirmed ALB health check functionality.
+
+Figure: 12.Unhealthy Status after stop nginx server on server1.png
+
+🔥 Test 2 — Instance Termination
+
+Terminated one EC2 instance manually.
+
+With Auto Scaling Group configured:
+
+Instance was automatically replaced
+
+Desired capacity restored
+
+Service remained available
+
+This demonstrated self-healing infrastructure.
+
+🧠 Key Technical Learnings
+
+ALB performs continuous health checks
+
+Unhealthy instances are removed from rotation automatically
+
+Auto Scaling ensures desired capacity
+
+Multi-AZ deployment increases availability
+
+High Availability requires both Load Balancing + Scaling
 
 
