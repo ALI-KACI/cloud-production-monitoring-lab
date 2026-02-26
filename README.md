@@ -617,3 +617,99 @@ Multi-AZ deployment increases availability
 High Availability requires both Load Balancing + Scaling
 
 
+## 📘 Day 7 — IAM Role Design Before Lambda Creation
+🎯 Objective
+
+Prepare secure IAM execution role for future Lambda deployment.
+
+Today was about security-first architecture, not creating compute.
+
+🧱 What We Designed Today
+1️⃣ Architecture Order Correction
+
+We clarified the correct deployment sequence:
+
+DynamoDB
+
+SNS
+
+IAM Role
+
+Lambda
+
+S3 Trigger
+
+Important lesson:
+
+Security roles must be created BEFORE compute resources.
+
+2️⃣ IAM Role Creation (Execution Role for Lambda)
+
+We created:
+
+Role Name: medical-report-lambda-role
+Trusted Entity: Lambda Service
+
+Why?
+
+Because Lambda must assume this role to access other AWS services.
+
+Without trust relationship → Lambda cannot execute.
+
+3️⃣ CloudWatch Logs ARN Discussion (Critical Learning)
+
+We discovered an important concept:
+
+When creating IAM role, Lambda does NOT exist yet.
+Therefore its log group does NOT exist either.
+
+Key Understanding:
+
+IAM does not require resource to already exist.
+
+CloudWatch log group is created automatically when Lambda runs first time.
+
+Architectural improvement:
+
+Instead of using specific ARN:
+
+arn:aws:logs:us-east-1:123456789012:log-group:/aws/lambda/medical-report-processor:*
+
+We used:
+
+"Resource": "*"
+
+For logs only.
+
+Reason:
+
+Log groups are dynamically created by Lambda.
+Over-restricting may break logging.
+
+🧠 Major Concepts Learned
+
+Execution Role vs Resource Policy
+
+Trust Relationship
+
+Least Privilege Principle
+
+Dynamic resource creation (CloudWatch)
+
+Security before compute
+
+IAM does not validate resource existence
+
+🏗 Architect Thinking Level Achieved Today
+
+Today you:
+
+Questioned ARN logic correctly
+
+Identified resource-creation timing issue
+
+Improved policy design
+
+Understood dynamic infrastructure behavior
+
+This is Cloud Security Engineer mindset.
